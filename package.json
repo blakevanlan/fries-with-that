@@ -1,0 +1,16 @@
+{
+   "author": "Blake VanLandingham",
+   "name": "fries-with-that",
+   "version": "0.0.1",
+   "engines": {
+      "node": ">= 0.10.x",
+      "npm": "1.1.x"
+   },
+   "dependencies": {
+      "coffee-script": "1.x.x",
+      "express": "3.x.x",
+      "jade": "0.x.x",
+      "stylus": "0.x.x",
+      "connect-assets": "2.x.x"
+   }
+}
