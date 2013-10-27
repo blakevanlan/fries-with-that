@@ -15,8 +15,12 @@ class window.ConsoleViewModel
       @gameData = gameData
       @input = ko.observable()
       @lines = ko.observableArray()
-      @roomsMap = @createRoomsMap(gameData.rooms)
-      @currentRoom = @moveToRoom(gameData.startingRoom)
+
+      if (!gameData?.rooms)
+         @print("Failed to load game...")
+      else
+         @roomsMap = @createRoomsMap(gameData.rooms)
+         @moveToRoom(gameData.startingRoom)
 
    createRoomsMap: (rooms) ->
       roomsMap = {}
@@ -24,6 +28,7 @@ class window.ConsoleViewModel
       return roomsMap
       
    print: (str) =>
+      str = "&nbsp;" unless str
       @lines.push(str)
 
    moveToRoom: (roomId) =>
@@ -31,7 +36,7 @@ class window.ConsoleViewModel
          @print('That room seems to have vanished...')
       else
          @currentRoom = nextRoom
-         @print(@highlightRoomText(nextRoom))
+         @print(@highlightText(nextRoom.text, nextRoom))
 
    parseInput: () =>
       text = @input().trim()
@@ -40,16 +45,16 @@ class window.ConsoleViewModel
       
       for command, regex of commands
          if regex.test(text)
-            commandFns[command].call(this, text.replace(regex, "").trim())
+            @commandFns[command].call(this, text.replace(regex, "").trim())
             return
 
-      @print('Invalid command. Type "help" for commands')
+      @print('Invalid command. Type "help" for commands.')
 
    commandFns:
       examine: (text) ->
          for object in @currentRoom.objects
             if object.phrase == text
-               @print(object.text)
+               @print(@highlightText(object.text, @currentRoom))
                return
 
          @print("Can't examine: #{text}")
@@ -63,20 +68,24 @@ class window.ConsoleViewModel
          @print("Can't go to room: #{text}")
 
       help: () ->
-         @print('Available commands:')
-         @print('  goto <room>       moves to the room, rooms are marked in blue')
-         @print('                       ex: "goto bedroom" or "g bedroom" (shortcut is g)')
-         @print('  examine <object>  examines an object, objects are marked in orange')
-         @print('                       ex: "examine shelf" or "e shelf" (shortcut is e)')
+         tab = "&nbsp;&nbsp;&nbsp;&nbsp;"
+         @print("Commands:")
+         @print("")
+         @print("goto <room>&nbsp;&nbsp;&nbsp;#{tab}moves to a <span class=\"room\">room</span>")
+         @print("#{tab}#{tab}#{tab}#{tab}ex: \"goto bedroom\"")
+         @print("#{tab}#{tab}#{tab}#{tab}&nbsp;&nbsp;&nbsp; \"g bedroom\" (shortcut is g)")
+         @print("")
+         @print("examine <object>#{tab}examines an <span class=\"object\">object</span>")
+         @print("#{tab}#{tab}#{tab}#{tab}ex: \"examine shelf\"")
+         @print("#{tab}#{tab}#{tab}#{tab}#{tab}\"e shelf\" (shortcut is e)")
 
-   highlightRoomText: (room) =>
-      text = room.text
+   highlightText: (text, room) =>
       for object in room.objects
-         regex = new Regex(object.phrase, 'gi')
+         regex = new RegExp(object.phrase, 'gi')
          text = text.replace(regex, "<span class=\"object\">#{object.phrase}</span>")
       
-      for room in room.rooms
-         regex = new Regex(room.phrase, 'gi')
+      for room in room.exits
+         regex = new RegExp(room.phrase, 'gi')
          text = text.replace(regex, "<span class=\"room\">#{room.phrase}</span>")
 
       return text

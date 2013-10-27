@@ -9,9 +9,9 @@ block head
 block content
    
    .console
-      .console-scrollbar
+      .console-scrollbar(data-bind="stickyScroll: lines")
          .console-body(data-bind="foreach: lines")
-            span.line(data-bind="html: $data")
+            .line(data-bind="html: $data")
 
       .console-prompt
          span.console-prompt-text &gt;

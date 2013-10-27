@@ -8,3 +8,9 @@ ko.bindingHandlers.onEnter =
                 return false
             
             return true
+
+ko.bindingHandlers.stickyScroll = 
+    update: (element, valueAccessor) ->
+      data = ko.utils.unwrapObservable valueAccessor()
+      console.log("UPDATE")
+      element.scrollTop = element.scrollHeight
