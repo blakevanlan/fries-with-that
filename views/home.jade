@@ -1,13 +1,30 @@
 extend layout
 
 block head
-   link(href='http://fonts.googleapis.com/css?family=Cutive+Mono' rel='stylesheet' type='text/css')
+   link(href='http://fonts.googleapis.com/css?family=Cutive+Mono|Orbitron:400,700' rel='stylesheet' type='text/css')
    script(type="text/javascript", src="data/game.js")
    != js("console")
    != js("pages/home")
 
 block content
    
+   .top-highlight
+
+   .header
+      .title
+         .rest I'd like fries with
+         .that That
+      .title-separator
+      .description
+         | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur, nunc vitae fermentum ultrices, lectus arcu placerat elit, vel laoreet neque eros non neque. Maecenas varius mi sem, vitae faucibus tellus hendrerit eget. Mauris justo odio, fermentum et accumsan at, tincidunt et metus. Nam posuere sapien id neque vehicula lacinia. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam tincidunt eros quis ornare lacinia. Cras pharetra nunc eu enim facilisis, id dignissim metus mattis. Praesent sed odio ante. Etiam eros est, commodo eget cursus eget, volutpat eget nibh.
+      
+      .button-wrap
+         span#playButton.play-button
+            span.text Play the Game
+            span.arrow
+
+   .divider
+
    .console
       .console-scrollbar(data-bind="stickyScroll: lines")
          .console-body(data-bind="foreach: lines")

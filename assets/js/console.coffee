@@ -62,7 +62,7 @@ class window.ConsoleViewModel
       goto: (text) ->
          for room in @currentRoom.exits
             if room.phrase == text
-               @moveToRoom(room)
+               @moveToRoom(room.roomId)
                return
 
          @print("Can't go to room: #{text}")

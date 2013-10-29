@@ -11,14 +11,24 @@ app.get "/data/game.js", (req, res, next) ->
       startingRoom: "r1",
       rooms: [{
          roomId: "r1",
-         exits: [],
+         exits: [
+            {
+               phrase: "bedroom",
+               roomId: "r2"
+            }
+         ],
          objects: [
             {
                phrase: "bookshelf"
                text: "Look its a bookshelf"
             }
          ],
-         text: "You've entered a room with a bookshelf."
+         text: "You've entered a room with a bookshelf and a bedroom door"
+      }, {
+         roomId: "r2",
+         exits: [],
+         objects: [],
+         text: "You've entered an empty room."
       }]
    }
 

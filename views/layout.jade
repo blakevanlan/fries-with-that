@@ -16,5 +16,5 @@ html
    - var view = locals.filename.replace(viewDir, "").replace(".jade", "").replace(/^[\\\/]/g, "");
    - var pageClass = view.replace(/[\\\/]/g, "-") + "-page";
    
-   body
+   body(class=pageClass)
       block content
