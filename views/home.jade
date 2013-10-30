@@ -26,9 +26,10 @@ block content
    .divider
 
    .console
-      .console-scrollbar(data-bind="stickyScroll: lines")
-         .console-body(data-bind="foreach: lines")
-            .line(data-bind="html: $data")
+      .console-scrollbar(data-bind="stickyScroll: lines, foreach: lines")
+         .line(data-bind="html: $data")
+         //- .console-body(data-bind="foreach: lines")
+         //-    .line(data-bind="html: $data")
 
       .console-prompt
          span.console-prompt-text &gt;

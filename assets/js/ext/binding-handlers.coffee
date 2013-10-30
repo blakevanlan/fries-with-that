@@ -12,4 +12,5 @@ ko.bindingHandlers.onEnter =
 ko.bindingHandlers.stickyScroll = 
     update: (element, valueAccessor) ->
       data = ko.utils.unwrapObservable valueAccessor()
+      # Scroll to the bottom, add 25 to ensure
       element.scrollTop = element.scrollHeight
