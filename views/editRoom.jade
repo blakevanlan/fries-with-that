@@ -6,20 +6,21 @@ block head
 
 block content
    
-   h1 new room
+   h1= room.title ? 'edit room' : 'new room'
 
-   input(type="hidden", name="allrooms", value=allRoomsString)
+   input(type="hidden", name="allrooms", value="#{JSON.stringify(allRooms)}")
 
    .admin-content
 
       form(action="/edit/#{room._id ? 'rooms/' + room._id : 'newroom'}", method="POST")
 
          span.label Title
-         input(type="text", name="title")        
+         input(type="text", name="title", value="#{room.title || ''}")        
 
          .section
             h2 Text
             textarea(name="text")
+               | #{room.text ? room.text.join('\n~\n') : ''}
             .note Use a tilda (~) on its own line to break up the text into segments.
 
          .section
@@ -27,13 +28,19 @@ block content
                a#addExit.button.small Add Exit
             .exitList
                if room.exits && room.exits.length > 0
-                  .exit
-                     a.deleteRow.button.small Delete
-                     span.label Phrase
-                     input(type="text", name="exitPhrase_1")
-                     span.label.room Room
-                     select(name="exitRoom_1")
-                        option(value="empty") Select room
+                  for exit, index in room.exits
+                     .exit
+                        a.deleteRow.button.small Delete
+                        span.label Phrase
+                        input(type="text", name="exitPhrase_#{index}", value=exit.phrase)
+                        span.label.room Room
+                        select(name="exitRoom_#{index}")
+                           option(value="empty") Select room
+                           for room in allRooms
+                              if exit.roomId.toString() == room._id
+                                 option(value=room._id, selected="selected")= room.title
+                              else
+                                 option(value=room._id)= room.title
 
 
          .section
@@ -41,13 +48,15 @@ block content
                a#addObject.button.small Add Object
             .objectList
                if room.objects && room.objects.length > 0
-                  .object
-                     a.deleteRow.button.small Delete
-                     span.label Phrase
-                     input(type="text", name="objectPhrase_1")
-                     br
-                     span.label.text Text
-                     textarea.text(name="objectText_1")
+                  for object, index in room.objects
+                     .object
+                        a.deleteRow.button.small Delete
+                        span.label Phrase
+                        input(type="text", name="objectPhrase_#{index}", value=object.phrase)
+                        br
+                        span.label.text Text
+                        textarea.text(name="objectText_#{index}")= object.text.join('\n~\n')
+
 
             .note The phrase is what will get highlighted in any of the text.
 

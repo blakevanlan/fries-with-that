@@ -25,10 +25,14 @@ block content
 
          input#saveStartingRoom.small(type="submit") Save
 
-      for room in rooms
-         .room
-            .title= room.title
-            .text= room.text
-            a.edit
-            a.delete
+      .section
+         h2 Rooms 
+         for room in rooms
+            .room
+               a.button.small.delete(href="/edit/delete/#{room._id}") Delete
+               a.button.small.edit(href="/edit/rooms/#{room._id}") Edit
+               span.title= room.title
+               br
+               - var text = room.text.join('~')
+               span.text= text.length > 120 ? "#{text.substring(0,60)}..." : text
    

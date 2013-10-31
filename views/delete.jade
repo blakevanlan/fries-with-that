@@ -1,0 +1,19 @@
+extend layout
+
+block head
+   != css("admin")
+   != js("pages/editRoom")
+
+block content
+   
+   h1 delete room
+
+   .admin-content
+      .section
+         span.label Are you sure you want to delete <b>#{room.title}</b>?
+
+      form(action="/edit/delete/#{room._id}", method="POST")
+         input(type="hidden", name="allrooms", value=room)
+
+         input(type="submit", value="Delete")
+         a.button.cancel(href="/edit") Cancel
