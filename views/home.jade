@@ -1,7 +1,6 @@
 extend layout
 
 block head
-   link(href='http://fonts.googleapis.com/css?family=Cutive+Mono|Orbitron:400,700' rel='stylesheet' type='text/css')
    script(type="text/javascript", src="data/game.js")
    != js("console")
    != js("pages/home")
@@ -28,8 +27,6 @@ block content
    .console
       .console-scrollbar(data-bind="stickyScroll: lines, foreach: lines")
          .line(data-bind="html: $data")
-         //- .console-body(data-bind="foreach: lines")
-         //-    .line(data-bind="html: $data")
 
       .console-prompt
          span.console-prompt-text &gt;

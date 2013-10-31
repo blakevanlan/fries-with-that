@@ -1,0 +1,55 @@
+extend layout
+
+block head
+   != css("admin")
+   != js("pages/editRoom")
+
+block content
+   
+   h1 new room
+
+   input(type="hidden", name="allrooms", value=allRoomsString)
+
+   .admin-content
+
+      form(action="/edit/#{room._id ? 'rooms/' + room._id : 'newroom'}", method="POST")
+
+         span.label Title
+         input(type="text", name="title")        
+
+         .section
+            h2 Text
+            textarea(name="text")
+            .note Use a tilda (~) on its own line to break up the text into segments.
+
+         .section
+            h2 Exits
+               a#addExit.button.small Add Exit
+            .exitList
+               if room.exits && room.exits.length > 0
+                  .exit
+                     a.deleteRow.button.small Delete
+                     span.label Phrase
+                     input(type="text", name="exitPhrase_1")
+                     span.label.room Room
+                     select(name="exitRoom_1")
+                        option(value="empty") Select room
+
+
+         .section
+            h2 Objects
+               a#addObject.button.small Add Object
+            .objectList
+               if room.objects && room.objects.length > 0
+                  .object
+                     a.deleteRow.button.small Delete
+                     span.label Phrase
+                     input(type="text", name="objectPhrase_1")
+                     br
+                     span.label.text Text
+                     textarea.text(name="objectText_1")
+
+            .note The phrase is what will get highlighted in any of the text.
+
+         input(type="submit", value="Save")
+         a.button.cancel(href="/edit") Cancel

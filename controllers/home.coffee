@@ -1,4 +1,7 @@
-express = require "express"
+express = require 'express'
+async = require 'async'
+Config = require '../models/config'
+Room = require '../models/room'
 
 app = module.exports = express()
 
@@ -32,32 +35,18 @@ app.get "/data/game.js", (req, res, next) ->
       }]
    }
 
+   return res.send "window.gameData = #{JSON.stringify(gameData)};";
 
-   res.send "window.gameData = #{JSON.stringify(gameData)};";
+   async.parallel
+      rooms: (done) -> Room.find(done)
+      config: (done) -> Config.getConfig(done)
+   , (err, results) ->
+      if err or !results?.config or !results?.rooms
+         return res.send "window.getData = null;" 
 
-   ###
+      gameData = {
+         startingRoom: results.config.startingRoom
+         rooms: results.rooms
+      }
 
-   Game data template
-   {
-      startingRoom: "{roomId}"
-      rooms: [
-         {
-            roomId: String
-            exits: [
-               {
-                  roomId: String
-                  phrase: String
-               }
-            ],
-            objects: [
-               {
-                  phrase: String
-                  text: String
-               }
-            ]
-            text: String
-         }
-      ]
-   }
-
-   ###
+      res.send "window.gameData = #{JSON.stringify(gameData)};";

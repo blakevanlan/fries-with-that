@@ -1,0 +1,154 @@
+@import "variables"
+
+body
+   background: primary-dark
+   
+h1
+   width: 740px
+   font-family: 'Orbitron', sans-serif
+   color: #fff
+   font-size: 100px
+   margin: 30px auto 0
+   text-shadow: 0px 2px 0 #000
+
+h2
+   color: primary-dark
+   border-bottom: 1px solid med-purple
+   font-size: 35px
+   margin: 20px 0 10px 0
+
+.admin-content
+   width: 700px
+   border: 2px solid primary-highlight
+   border-radius: 10px
+   padding: 20px
+   margin: 0 auto 60px
+   background: #fff
+   box-shadow: 0px 1px 0px #000
+
+.section
+   margin-bottom: 40px
+
+.label
+   color: primary-dark
+   font-size: 20px
+   margin-right: 8px
+   position: relative
+   top: 3px
+
+input[type=text]
+input[type=password]
+textarea
+   background: #ccc
+   border: 1px solid primary-highlight
+   padding: 6px 15px
+   border-radius: 6px
+   color: primary-dark
+   box-shadow: 0 1px 0 0 #333 inset
+
+   &:focus
+      outline: none
+
+textarea
+   width: 666px
+   min-height: 80px
+   font-family: "Cutive Mono", serif
+
+.note
+   font-size: 14px
+   color: primary-dark
+   margin-top: 5px
+
+
+input[type=submit]
+a.button
+   border: 1px solid primary-dark
+   color: #fff
+   border-radius: 6px
+   font-family: 'Orbitron', sans-serif
+   font-size: 18px
+   background: med-purple
+   padding: 11px 15px
+   text-shadow: 0px 1px 0 #000
+   box-shadow: 0px 1px 0px #000
+   text-decoration: none
+   margin-right: 10px
+   cursor: pointer
+
+   &.small
+      padding: 6px 10px
+      font-size: 12px
+
+
+   &:hover
+      outline: none
+      background: primary-highlight
+   
+   &.cancel
+      background: #505050
+      &:hover
+         background: #6B6B6B
+
+.login-page
+   h1
+      text-align: center
+      margin-top: 100px
+      margin-bottom: 20px
+
+   .admin-content
+      width: 300px
+
+      input[type=password]
+         font-size: 25px
+         width: 160px
+         
+      input[type=submit]
+         position: relative
+         display: inline-block
+         top: -4px
+         margin-left: 6px
+         margin-right: 0
+
+.edit-page
+   #saveStartingRoom
+      position: relative
+      margin-left: 12px
+      top: -2px
+      
+   #newRoom
+      float: right
+      border: 1px solid #fff
+      position: relative
+      top: -88px
+      right: -20px
+
+.editRoom-page
+   #addExit
+   #addObject
+      float: right
+      position: relative
+      top: 5px
+      margin-right: 0
+
+   .exit
+   .object
+      padding: 8px 0
+      border-bottom: 1px solid #bbb
+
+   .deleteRow
+      float: right
+      margin-right: 0
+
+   .exitList
+      .label.room
+         margin-left: 35px
+      
+   .objectList
+      span.label.text
+         margin-top: 2px
+      textarea.text
+         width: 525px
+         margin: 5px 0 0 18px
+         min-height: 50px
+      
+

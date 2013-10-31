@@ -13,6 +13,8 @@
       "stylus": "0.x.x",
       "connect-assets": "2.x.x",
       "passport": "0.1.x",
-      "passport-local": "0.1.x"
+      "passport-local": "0.1.x",
+      "mongoose": "3.x.x",
+      "async": "0.2.x"
    }
 }

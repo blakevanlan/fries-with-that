@@ -1,0 +1,34 @@
+extend layout
+
+block head
+   != css("admin")
+
+block content
+   
+   h1 admin
+
+   .admin-content
+
+      a#newRoom.button(href="/edit/newroom") New Room
+
+      form.startingRoom(action="/edit", method="POST")
+         span.label Starting Room:
+         select(name="startingRoom")
+            if !startingRoom
+               option(value="empty", selected="selected") Select starting room
+            
+            for room in rooms
+               if startingRoom == room._id
+                  option(value=room._id, selected="selected")= room.title
+               else
+                  option(value=room._id)= room.title
+
+         input#saveStartingRoom.small(type="submit") Save
+
+      for room in rooms
+         .room
+            .title= room.title
+            .text= room.text
+            a.edit
+            a.delete
+   

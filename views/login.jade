@@ -1,0 +1,15 @@
+extend layout
+
+block head
+   != css("admin")
+
+block content
+
+   h1 login
+   .admin-content
+      form(action="login", method="POST")
+         input(type="hidden", name="username", value="anything")
+         input(type="password", name="password")
+         input(type="submit")
+
+   
