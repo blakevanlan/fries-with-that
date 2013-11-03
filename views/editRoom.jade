@@ -37,7 +37,7 @@ block content
                         select(name="exitRoom_#{index}")
                            option(value="empty") Select room
                            for room in allRooms
-                              if exit.roomId.toString() == room._id
+                              if exit.roomId && exit.roomId.toString() == room._id
                                  option(value=room._id, selected="selected")= room.title
                               else
                                  option(value=room._id)= room.title

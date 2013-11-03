@@ -9,7 +9,8 @@ block content
 
    .admin-content
 
-      a#newRoom.button(href="/edit/newroom") New Room
+      a.headerButton.button(href="/edit/newroom") New Room
+      a.headerButton.button.cancel(href="/") Back to Home
 
       form.startingRoom(action="/edit", method="POST")
          span.label Starting Room:
@@ -18,12 +19,12 @@ block content
                option(value="empty", selected="selected") Select starting room
             
             for room in rooms
-               if startingRoom == room._id
+               if startingRoom == room._id.toString()
                   option(value=room._id, selected="selected")= room.title
                else
                   option(value=room._id)= room.title
 
-         input#saveStartingRoom.small(type="submit") Save
+         input#saveStartingRoom.small(type="submit", value="Save")
 
       .section
          h2 Rooms 
@@ -34,5 +35,5 @@ block content
                span.title= room.title
                br
                - var text = room.text.join('~')
-               span.text= text.length > 120 ? "#{text.substring(0,60)}..." : text
+               span.text= text.length > 65 ? text.substring(0,65)+'...' : text
    

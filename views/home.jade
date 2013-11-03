@@ -1,7 +1,6 @@
 extend layout
 
 block head
-   script(type="text/javascript", src="data/game.js")
    != js("console")
    != js("pages/home")
 
@@ -25,7 +24,7 @@ block content
    .divider
 
    .console
-      .console-scrollbar(data-bind="stickyScroll: lines, foreach: lines")
+      .console-scrollbar(data-bind="foreach: lines, stickyScroll: lines")
          .line(data-bind="html: $data")
 
       .console-prompt
