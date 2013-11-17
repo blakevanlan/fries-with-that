@@ -14,7 +14,7 @@
       "connect-assets": "2.x.x",
       "passport": "0.1.x",
       "passport-local": "0.1.x",
-      "mongoose": "3.x.x",
+      "mongoose": "3.7.x",
       "async": "0.2.x"
    }
 }
