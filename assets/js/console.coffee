@@ -24,7 +24,7 @@ class window.ConsoleViewModel
       @print('Loading game...')
       $.getJSON('gameData.json', (gameData) =>
          @gameData = gameData
-         @reprint('Game data loaded!')
+         @removeLines(1)
          @roomsMap = @createRoomsMap(gameData.rooms)
          @moveToRoom(gameData.startingRoom)
       ).fail () =>

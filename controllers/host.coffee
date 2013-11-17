@@ -41,8 +41,6 @@ app.use express.session({ secret: 'yo, yo its secret' })
 app.use passport.initialize()
 app.use passport.session()
 
-
-
 # Controllers
 app.use require "./home"
 app.use (require "./admin")(passport)
