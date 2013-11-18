@@ -17,6 +17,7 @@ module.exports = (passport) ->
    }))
 
    app.get '/login', (req, res) -> 
+      return res.redirect('/edit') if req.isAuthenticated() 
       res.render 'login'
 
    app.get '/edit', ensureAuthenticated, (req, res, next) ->
