@@ -53,6 +53,7 @@ module.exports = (passport) ->
       Room.findById req.params.roomId, (err, room) ->
          room.title = body.title
          room.text = processRoomText(body.text)
+         console.log("text", room.text)
 
          delete body.title
          delete body.text
@@ -79,6 +80,7 @@ module.exports = (passport) ->
       room = new Room()
       room.title = body.title
       room.text = processRoomText(body.text)
+      console.log("text", room.text)
       
       delete body.title
       delete body.text
@@ -102,7 +104,7 @@ module.exports = (passport) ->
    return app
 
 
-processRoomText = (text) -> return text.split('~')
+processRoomText = (text) -> return text.split(/\r?\n~\r?\n/g)
 parseBody = (body, room) ->
    exits = []
    objects = []
