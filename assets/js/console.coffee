@@ -1,6 +1,6 @@
 commands = {
-   'examine': /^(examine)|(e)\s/,
-   'goto': /^(goto)|(g)\s/,
+   'examine': /^((examine)|(e))\s/,
+   'goto': /^((goto)|(g))\s/,
    'help': /^help\s*$/,
    'more': /^more\s*/
 }
@@ -19,6 +19,13 @@ class window.ConsoleViewModel
       @input = ko.observable()
       @lines = ko.observableArray()
       @loadGameData()
+      
+      # Add click handlers for object and room
+      inputObservable = @input
+      $('body').on 'click', 'span.object', (e) ->
+         inputObservable("examine #{$(this).text().toLowerCase()}")
+      $('body').on 'click', 'span.room', (e) ->
+         inputObservable("goto #{$(this).text().toLowerCase()}")
 
    loadGameData: () =>
       @print('Loading game...')
@@ -69,7 +76,7 @@ class window.ConsoleViewModel
          @print(@highlightText(nextRoom.text, nextRoom))
 
    parseInput: () =>
-      text = @input().trim()
+      text = @input().trim().toLowerCase()
       @print("&gt; #{text}")
       @input('')
 
@@ -123,11 +130,15 @@ class window.ConsoleViewModel
       for entry in text
          for object in room.objects
             regex = new RegExp(object.phrase, 'gi')
-            entry = entry.replace(regex, "<span class=\"object\">#{object.phrase}</span>")
+            matches = entry.match(regex)
+            continue unless matches
+            entry = entry.replace(m, "<span class=\"object\">#{m}</span>") for m in matches
          
          for exit in room.exits
             regex = new RegExp(exit.phrase, 'gi')
-            entry = entry.replace(regex, "<span class=\"room\">#{exit.phrase}</span>")
+            matches = entry.match(regex)
+            continue unless matches
+            entry = entry.replace(m, "<span class=\"room\">#{m}</span>") for m in matches
 
          highlighted.push(entry)
 

@@ -80,7 +80,6 @@ module.exports = (passport) ->
       room = new Room()
       room.title = body.title
       room.text = processRoomText(body.text)
-      console.log("text", room.text)
       
       delete body.title
       delete body.text
@@ -114,7 +113,7 @@ parseBody = (body, room) ->
       if key.indexOf('objectPhrase_') == 0
          index = key.replace('objectPhrase_', '')
          objects[index] = {} unless objects[index]
-         objects[index].phrase = value
+         objects[index].phrase = value?.toLowerCase()
       
       else if key.indexOf('objectText_') == 0
          index = key.replace('objectText_', '')
@@ -124,7 +123,7 @@ parseBody = (body, room) ->
       else if key.indexOf('exitPhrase_') == 0
          index = key.replace('exitPhrase_', '')
          exits[index] = {} unless exits[index]
-         exits[index].phrase = value
+         exits[index].phrase = value?.toLowerCase()
       
       else if key.indexOf('exitRoom_') == 0
          index = key.replace('exitRoom_', '')
