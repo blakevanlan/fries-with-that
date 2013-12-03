@@ -21,7 +21,9 @@ block content
             h2 Text
             textarea(name="text")
                | #{room.text ? room.text.join('\n~\n') : ''}
-            .note Use a tilda (~) on its own line to break up the text into segments.
+            .note
+               | Use a tilda (~) on its own line to break up the text into segments.
+               | To create a aside, use ### on its own line before and after the text.
 
          .section
             h2 Exits

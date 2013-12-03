@@ -111,6 +111,8 @@ body.home-page
    font-family: "Cutive Mono", serif
    font-size: 15px
    overflow: hidden
+   position: relative
+   text-shadow: 0 1px #000
 
    .console-scrollbar
       height: 357px
@@ -126,18 +128,23 @@ body.home-page
       .line:last-child
          margin-bottom: 0
 
-      .room
-         color: console-room-color
-         cursor: pointer
-      .object
-         color: console-object-color
-         cursor: pointer
+   .room
+      color: console-room-color
+      cursor: pointer
+   .object
+      color: console-object-color
+      cursor: pointer
+
+   .comment
+      color: console-comment-color 
+      font-style: italic
+      .room, .object
+         color: console-comment-color
    
    .console-prompt
       height: 32px
       line-height: 20px
       padding: 5px 15px
-
 
       .console-prompt-input 
          margin-left: 7px
@@ -149,6 +156,15 @@ body.home-page
          &:focus
             outline: 0
             border: 0
+
+   .console-help-pane
+      position: absolute
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      padding: 16px
+      background: rgba(0, 0, 0, 0.95)
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5)
    body.home-page

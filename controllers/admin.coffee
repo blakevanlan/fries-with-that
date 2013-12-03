@@ -53,8 +53,7 @@ module.exports = (passport) ->
       Room.findById req.params.roomId, (err, room) ->
          room.title = body.title
          room.text = processRoomText(body.text)
-         console.log("text", room.text)
-
+         
          delete body.title
          delete body.text
 

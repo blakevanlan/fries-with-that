@@ -19,6 +19,7 @@ class window.ConsoleViewModel
       @input = ko.observable()
       @lines = ko.observableArray()
       @loadGameData()
+      @isInIntro = true
       
       # Add click handlers for object and room
       inputObservable = @input
@@ -31,17 +32,45 @@ class window.ConsoleViewModel
       @print('Loading game...')
       $.getJSON('gameData.json', (gameData) =>
          @gameData = gameData
-         @removeLines(1)
          @roomsMap = @createRoomsMap(gameData.rooms)
-         @moveToRoom(gameData.startingRoom)
+         @showIntro()
       ).fail () =>
          @reprint('Failed to load game...')
+
+   showIntro: () =>
+      @clear()
+      @isInIntro = true
+      tab = '&nbsp;&nbsp;&nbsp;'
+      @print("Welcome to I'd like Fries with That!")
+      @print("")
+      @print('You will use the following commands to play:')
+      @print("")
+      @print("#{tab}Type \"goto &lt;room&gt;\" to move to a <span class=\"room\">room</span>")
+      @print("#{tab}#{tab}Rooms will always be highlighted in <span class=\"room\">this color</span>")
+      @print("#{tab}#{tab}and can be clicked on to skip the typing")
+      @print("")
+      @print("#{tab}Type \"examine &lt;object&gt;\" to examine an <span class=\"object\">object</span>")
+      @print("#{tab}#{tab}Objects will always be highlighted in <span class=\"object\">this color</span>")
+      @print("#{tab}#{tab}and can be clicked on to skip the typing")
+      @print("")
+      @print("#{tab}Type \"help\" to see the commands again")
+      @print("")
+      @print("And finally, asides are shown in <span class=\"comment\">this color</span>, which provide additional context but are not in second person.")
+      @print("")
+      @print("That's all! Type \"start\" to begin!")
+
+   startGame: () =>
+      @clear()
+      @isInIntro = false
+      @moveToRoom(@gameData.startingRoom)
 
    createRoomsMap: (rooms) ->
       roomsMap = {}
       roomsMap[room._id] = room for room in rooms
       return roomsMap
       
+   clear: () => @lines([])
+
    removeLines: (count = 1) =>
       @lines.pop() for i in [1..count]
          
@@ -79,6 +108,11 @@ class window.ConsoleViewModel
       text = @input().trim().toLowerCase()
       @print("&gt; #{text}")
       @input('')
+
+      if @isInIntro
+         if text == 'start' then @startGame()
+         else @print('Please type "start" to begin!')
+         return
 
       for command, regex of commands
          if regex.test(text)
@@ -128,6 +162,14 @@ class window.ConsoleViewModel
       highlighted = []
 
       for entry in text
+
+         regex = /\r?\n###\r?\n?.*\r?\n###/gi
+         comments = entry.match(regex)
+         if (comments and comments.length > 0)
+            for m in comments
+               text = m.replace(/(###)|(\r)/g, "").replace(/\n/g, " ")
+               entry = entry.replace(m, "<br><span class=\"comment\">#{text}</span>")
+
          for object in room.objects
             regex = new RegExp(object.phrase, 'gi')
             matches = entry.match(regex)
